@@ -1,0 +1,47 @@
+<div class="page-container">
+  <!-- search filters -->
+  <div class="search-filter-wrapper">
+    <mat-form-field floatLabel="always">
+      <mat-label>Search Product</mat-label>
+      <input
+        matInput
+        placeholder="Type Here"
+        autocomplete="off"
+        [(ngModel)]="searchedWord"
+        (keyup.enter)="searchProduct($event)"
+      />
+      <mat-icon matSuffix (click)="searchProduct($event)">search</mat-icon>
+    </mat-form-field>
+  </div>
+  <!-- equipment lists -->
+  <mat-drawer-container class="example-container">
+    <mat-drawer-content>
+      <div class="no-results" *ngIf="!equipmentlist.length; else elseblock">
+        <span>no results available</span>
+      </div>
+      <ng-template #elseblock>
+        <div class="equipment-list-wrapper">
+          <app-borrow-equipment-card
+            class="card"
+            *ngFor="let equipment of equipmentlist"
+            [equipment]="equipment"
+          ></app-borrow-equipment-card>
+        </div>
+      </ng-template>
+    </mat-drawer-content>
+
+    <mat-drawer mode="side" [opened]="opened" position="end">
+      <div class="added-equipment-wrapper">
+        <app-added-equipment-card></app-added-equipment-card>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+  <!-- floating shopping cart icon -->
+  <div
+    class="view-cart-container clickable"
+    [class.cart-openside]="opened"
+    (click)="cartClicked()"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+  </div>
+</div>

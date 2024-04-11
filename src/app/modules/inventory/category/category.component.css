@@ -1,0 +1,43 @@
+.panel-name{
+    background-color: #d0cfcf;
+    border: 1px solid #dfdede;
+    border-radius: 5px;
+    font-size: 20px;
+    margin: 10px;
+    padding: 2px;
+}
+.mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected, .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-highlighted {
+    --mdc-chip-elevated-container-color: #5fa55a;
+    --mdc-chip-elevated-disabled-container-color: #5fa55a;
+    --mdc-chip-label-text-color: white;
+    --mdc-chip-disabled-label-text-color: white;
+    --mdc-chip-with-icon-icon-color: white;
+    --mdc-chip-with-icon-disabled-icon-color: white;
+    --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: white;
+    --mdc-chip-with-trailing-icon-trailing-icon-color: white;
+    --mdc-chip-with-icon-selected-icon-color: white;
+}
+
+.form-fields-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.form-field {
+    height: 70px;
+    margin-bottom: -22px;
+}
+.form-container {
+    display: flex;
+    align-items: center;
+}
+
+.select-container {
+    margin-left: 10px;
+}
+
+.mat-mdc-chip-set {
+    margin: 10px;
+    max-width: 100%;
+}

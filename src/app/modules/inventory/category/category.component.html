@@ -1,0 +1,90 @@
+
+<div class="panel-name">Category</div>
+<div class="form-fields-container">
+    <mat-form-field class="form-field">
+        <mat-label>Equipment Type</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('equipmentType', $event.value)" (selectionChange)="updateEquipmentSubcategories($event.value)">
+            <mat-option *ngFor="let equipment of equipments" [value]="equipment.value">
+                {{ equipment.viewValue }}
+                <div *ngIf="selectedEquipment && selectedEquipment.subcategories && selectedEquipment.subcategories.length > 0">
+                        <mat-select (selectionChange)="updateQueryParams('subcategory', $event.value)">
+                            <mat-option *ngFor="let subcategory of selectedEquipment.subcategories" [value]="subcategory.value">
+                                {{ subcategory.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                </div>
+            </mat-option>
+            
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Brand</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('brand', $event.value)">
+            <mat-option *ngFor="let brand of brands" [value]="brand.value">
+                {{ brand.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Matter Type</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('matter', $event.value)">
+            <mat-option *ngFor="let matter of matters" [value]="matter.value">
+                {{ matter.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Description Type</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('description', $event.value)">
+            <mat-option *ngFor="let description of descriptions" [value]="description.value">
+                {{ description.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+        <mat-label>Date Acquired</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    
+    <mat-form-field class="form-field">
+        <mat-label>Item Status</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('status', $event.value)">
+            <mat-option *ngFor="let status of status" [value]="status.value">
+                {{ status.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Remarks</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('remark', $event.value)">
+            <mat-option *ngFor="let remark of remarks" [value]="remark.value">
+                {{ remark.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Department</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('department', $event.value)">
+            <mat-option *ngFor="let department of departments" [value]="department.value">
+                {{ department.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+<div class="panel-name">Filter</div>
+<mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+    <mat-chip-option *ngFor="let chip of availableColors" [selected]="false" [color]="chip.color">
+        {{ chip.name }}
+    </mat-chip-option>
+</mat-chip-listbox>

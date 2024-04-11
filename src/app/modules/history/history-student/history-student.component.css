@@ -1,0 +1,68 @@
+.page-title{
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    margin: 0px;
+    padding: 4vh;
+    margin-bottom: -5vh;
+}
+.hline {
+    position: relative;
+    width: 100%;
+    border: none;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.example-container {
+    width: 100%;
+    height: 80%;
+}
+.custom-drawer-items {
+    padding: 2px;
+}
+.panel-name{
+    margin-bottom: 5px;
+}
+
+.custom-drawer {
+    width: 20%;
+    border-color: #dedcdc;
+}
+.scrollable-panel {
+    margin: 1%;
+    height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #575757;
+    border-radius: 5px;
+    padding: 10px;
+}
+.left-drawer-header{
+    margin: 1%;
+}
+.menu-panel {
+    margin: 10px;
+    margin-left: 15px;
+    margin-top: 5px;
+    float: left;
+    height: 65vh;
+    padding: 7px;
+    border: none;
+}
+.contents{
+    width: 100%;
+}
+.buttons{
+    flex-direction: column;
+}
+.buttons .mat-mdc-raised-button.mat-unthemed{
+    text-align: left;
+    margin-bottom: 5px;
+    width: 100%;
+    border-radius: 0px;
+    box-shadow: none;
+}

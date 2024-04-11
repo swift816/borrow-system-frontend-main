@@ -1,0 +1,57 @@
+
+<div class="panel-name">Item List</div>
+<div class="search-item">
+    <mat-form-field class="searchbar" floatLabel="always">
+        <mat-label>Search Item</mat-label>
+        <input
+            matInput
+            placeholder="Type Here"
+            autocomplete="off"
+            [formControl]="searchedWord"
+            (keyup.enter)="searchItem($event)"
+        />
+        <mat-icon matSuffix class="searchbar">search</mat-icon>
+    </mat-form-field>
+    
+</div>
+
+<div class="scrollable-panel">
+    <div class="table-header">
+        <div class="header-name">Name</div>
+        <div class="header-serial">Serial No</div>
+        <div class="header-equipment">Equipment Type</div>
+        <div class="header-brand">Brand</div>
+        <div class="header-desc">Description</div>
+        <div class="header-status">Status</div>
+        <div class="header-quantity">Quantity</div>
+    </div>
+    <div class="table-content">
+        <table mat-table [dataSource]="itemlist" class="mat-elevation-z8">
+            <ng-container matColumnDef="itemPanel">
+                <td mat-cell *matCellDef="let item">
+                    <app-item-panel [item]="item"></app-item-panel>
+                </td>
+            </ng-container>
+
+            <tr mat-row *matRowDef="let item; let i = index; columns: ['itemPanel']"></tr>
+        </table>
+    </div>
+</div>
+
+<div class="paginator">
+    <mat-paginator
+        [length]="pagination.length"
+        [pageSize]="pagination.limit"
+        [pageSizeOptions]="pagination.pageSizeOption"
+        (page)="onPageChange($event)">
+    </mat-paginator>
+</div>
+<div class="generate-buttons">
+    <div class="add-button">
+        <button mat-raised-button (click)="addItem()">Add Item</button>
+    </div>
+    <span class="spacer"></span>
+    <div class="report-button">
+        <button mat-raised-button>Print</button>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<app-student-header></app-student-header>
+<h1 class="page-title">Dashboard <div class="hline"></div></h1>
+<div class="dashboard-content">
+    
+    <div class="menu-panel">
+        <div class="buttons">
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToInventory()">
+                <mat-icon>inbox</mat-icon>
+                    Inventory List
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button>
+                <mat-icon>move_to_inbox</mat-icon>
+                    View Borrowed List
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button>
+                <mat-icon>assignment</mat-icon>
+                    Item Requests
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToHistory()">
+                <mat-icon>history</mat-icon>
+                    Borrowed History
+                </button>
+        </div>
+        
+        
+    </div>
+    <div class="contents">
+        <app-content-tabs></app-content-tabs>
+    </div>
+
+</div>

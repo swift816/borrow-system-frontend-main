@@ -1,0 +1,50 @@
+<div class="itemlist">
+    <mat-accordion>
+        <mat-expansion-panel #panel mouseEnterLeaveDebounce
+        (debounceMouseEnter)="panel.open()"
+        (debounceMouseLeave)="panel.close()">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="panel-title">
+                        {{ item.name }}
+                    </div>
+                </mat-panel-title>
+                <mat-panel-description class="panel-description" >
+                    <div class="detail-container">
+                        <div class="detail-value">{{ item.serialNo }}</div>
+                    </div>
+                    <div class="detail-container-equipment">
+                        <div class="detail-value">{{ item.equipmentType}}</div>
+                    </div>
+                    <div class="detail-container-brand">
+                        <div class="detail-value">{{ item.brand }}</div>
+                    </div>
+                    <div class="detail-container-desc">
+                        <div class="detail-value">{{ item.description }}</div>
+                    </div>
+                    <div class="detail-container-status">
+                        <div class="detail-value">{{ item.status }}</div>
+                    </div>
+                    <div class="detail-container-quantity">
+                        <div class="detail-value">{{ item.quantity }}</div>
+                    </div>
+                </mat-panel-description>
+                
+            </mat-expansion-panel-header>
+            <div class="expanded-description">
+                
+                <img
+                    class="fit-image"
+                    [src]="item.images.thumbnailUrl"
+                    alt=""
+                    />
+                </div>
+                <div class="detail-container">
+                    <div class="detail-value">{{ item.checkedBy }}</div>
+                </div>
+            <div class="edit-button">
+                <button mat-raised-button (click)="viewItemDetails()">Edit</button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

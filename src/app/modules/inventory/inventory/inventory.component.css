@@ -1,0 +1,17 @@
+.example-container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #555;
+}
+.custom-drawer-items {
+    padding: 2px;
+}
+.panel-name{
+    margin-bottom: 5px;
+}
+
+.custom-drawer {
+    width: 17%;
+    background-color: #f1efef; 
+  }
+  

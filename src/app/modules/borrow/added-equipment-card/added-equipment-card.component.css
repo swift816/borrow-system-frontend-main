@@ -1,0 +1,43 @@
+.added-equipment {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
+}
+
+.item-qty {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-qty mat-icon {
+  cursor: pointer;
+}
+
+.circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #87ab69;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.circle mat-icon {
+  color: black;
+  height: 16px;
+  width: 16px;
+  font-size: 16px;
+}
+
+.fit-image {
+    width: 40px;
+}

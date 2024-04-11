@@ -1,0 +1,25 @@
+
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form (ngSubmit)="login()">
+                <h1>Sign In</h1>
+                <input matInput type="text" name="accountId" [(ngModel)]="accountId" placeholder="Account ID">
+                <input matInput type="password" name="password" [(ngModel)]="password" placeholder="Password">
+                <a href="#">Forget Your Password?</a>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="register-container">
+            <div class="register">
+                <div class="register-panel register-right">
+                    <h1>Sign Up,</h1>
+                    <p>Hello student, no account yet?</p>
+                    <button class="hidden" id="register">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+

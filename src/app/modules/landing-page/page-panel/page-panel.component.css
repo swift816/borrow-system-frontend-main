@@ -1,0 +1,27 @@
+.panel-bar {
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 30vh;
+    
+}
+.content{
+    
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+.text-content {
+    text-align: left;
+    font-weight: 400;
+}
+.text-content .header{
+    font-size: 5vh;
+    margin-bottom: -1px;
+}
+.borrow-button .mat-mdc-raised-button.mat-unthemed{
+    margin-top: 30px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}

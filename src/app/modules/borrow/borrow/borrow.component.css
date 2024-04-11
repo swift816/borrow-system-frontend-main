@@ -1,0 +1,65 @@
+.page-container {
+  padding: 10px 20px;
+  position: relative;
+}
+
+.product-list-wrapper {
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-gap: 24px;
+}
+
+.equipment-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.added-equipment-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.card {
+  /* flex-grow: 1; */
+  /* This makes all divs the same width */
+  background-color: rgb(199, 241, 199);
+  border: 1px solid black;
+  padding: 10px;
+  min-width: 200px;
+  gap: 5px;
+}
+
+/* mat-drawer-container {
+  min-height: calc(100vh - 20%);
+} */
+
+mat-drawer {
+  width: 30%;
+}
+
+.view-cart-container {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ecefa3;
+  cursor: pointer;
+  z-index: 1;
+}
+
+@media screen and (max-width: 420px) {
+  .card {
+    flex-grow: 1;
+  }
+  mat-drawer {
+    width: 100%;
+  }
+}

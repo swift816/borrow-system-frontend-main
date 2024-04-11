@@ -1,0 +1,93 @@
+
+.add-item{
+    position: relative;
+    display: flex;
+    padding: 1%;
+}
+.first-content{
+    position: relative;
+    margin: 5%;
+}
+.second-content{
+    position: relative;
+    margin-left: 5%;
+    width: 70%;
+}
+.panel-title{
+    margin: 3%;
+}
+.header-form{
+    font-size: large;
+}
+.form-container{
+    position: relative;
+    border: 1px solid ;
+    border-color: rgb(136, 136, 136);
+    margin: 2%;
+    width: 100%;
+}
+.addName{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addEquipment{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addBrand{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addMatter{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addRemarks{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addDepartment{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.image-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 2%;
+    border: 1px solid ;
+    border-color: rgb(136, 136, 136);
+    width: 20vh;
+    height: 20vh;
+    overflow: hidden;
+}
+.image-container img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.add-image .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 100%;
+    margin: 2%;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.add-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-left: 5%;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
