@@ -1,85 +1,118 @@
-<div class="panel-title">
-    <h1>Add Item</h1>
-</div>
-<div class="add-item">
-    <div class="second-content">
-        <h1 class="header-form">Item Description</h1>
-        <div class="form-container">
-            <mat-form-field class="addName" floatLabel="always">
-                <mat-label>Item Name</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
-            </mat-form-field>
-            <mat-form-field class="addEquipment" floatLabel="always">
-                <mat-label>Equipment Type</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
-            </mat-form-field>
-            <mat-form-field class="addBrand" floatLabel="always">
-                <mat-label>Brand Name</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
-            </mat-form-field>
-            <mat-form-field class="addMatter" floatLabel="always">
-                <mat-label>Matter Type</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let matter of matters" [value]="matter.value">
-                        {{ matter.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="addMatter" floatLabel="always">
-                <mat-label>Color</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
-            </mat-form-field>
-        </div>
-        <h1 class="header-form">Item Status</h1>
-        <div class="form-container">
-            <mat-form-field class="addRemarks" floatLabel="always">
-                <mat-label>Status</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let statuses of status" [value]="statuses.value">
-                        {{ statuses.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="addRemarks" floatLabel="always">
-                <mat-label>Remarks</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let remark of remarks" [value]="remark.value">
-                        {{ remark.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="addDepartment" floatLabel="always">
-                <mat-label>Department</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let department of departments" [value]="department.value">
-                        {{ department.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+    <div class="add-dialog">
+    <div class="panel-title">
+        <h1>Add Item</h1>
     </div>
-    <div class="first-content">
-        <div class="image-container">
-            <img *ngIf="imageUrl" [src]="imageUrl">
-        </div>
-        <div class="add-image">
-            <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" (blur)="loadImageFromGoogleDrive()">
-        </div>
+    <div class="add-item">
+        
+        <form [formGroup]="addItemForm">
+            <div class="second-content">
+                <h1 class="header-form">Item Description</h1>
+                <div class="form-container">
+                    <mat-form-field class="addName" floatLabel="always">
+                        <mat-label>Item Name</mat-label>
+                        <input
+                            matInput
+                            formControlName="name"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="addEquipment" floatLabel="always">
+                        <mat-label>Equipment Type</mat-label>
+                        <input
+                            matInput
+                            formControlName="equipmentType"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="addBrand" floatLabel="always">
+                        <mat-label>Brand Name</mat-label>
+                        <input
+                            matInput
+                            formControlName="brand"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="serialNo" floatLabel="always">
+                        <mat-label>Serial No.</mat-label>
+                        <input
+                            matInput
+                            formControlName="serial"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="addMatter" floatLabel="always">
+                        <mat-label>Matter Type</mat-label>
+                        <mat-select formControlName="matter">
+                            <mat-option *ngFor="let matter of matters" [value]="matter.value">
+                                {{ matter.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="addDescription" floatLabel="always">
+                        <mat-label>Description</mat-label>
+                        <mat-select formControlName="description">
+                            <mat-option *ngFor="let description of descriptions" [value]="description.value">
+                                {{ description.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="addColor" floatLabel="always">
+                        <mat-label>Color</mat-label>
+                        <input
+                            matInput
+                            formControlName="color"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                </div>
+                <h1 class="header-form">Item Status</h1>
+                <div class="form-container">
+                    <mat-form-field class="addRemarks" floatLabel="always">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option *ngFor="let statuses of status" [value]="statuses.value">
+                                {{ statuses.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="addRemarks" floatLabel="always">
+                        <mat-label>Remarks</mat-label>
+                        <mat-select formControlName="remarks">
+                            <mat-option *ngFor="let remark of remarks" [value]="remark.value">
+                                {{ remark.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="checkedBy" floatLabel="always">
+                        <mat-label>Checked By</mat-label>
+                        <input
+                            matInput
+                            formControlName="checkedBy"
+                            autocomplete="off"
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="addDepartment" floatLabel="always">
+                        <mat-label>Department</mat-label>
+                        <mat-select formControlName="department">
+                            <mat-option *ngFor="let department of departments" [value]="department.value">
+                                {{ department.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="first-content">
+                <div class="image-container">
+                    <img *ngIf="imageUrl" [src]="imageUrl">
+                </div>
+                <div class="add-image">
+                    <input type="text" placeholder="Enter Google Drive Image Link" (blur)="loadImageFromGoogleDrive($event)">
+                </div>
+            </div>
+        </form>
     </div>
-</div>
 
-<div class="add-button">
-    <button mat-raised-button>Add Item</button>
+    <div class="add-button">
+        <button mat-raised-button (click)="onSubmit()">Add Item</button>
+    </div>
 </div>

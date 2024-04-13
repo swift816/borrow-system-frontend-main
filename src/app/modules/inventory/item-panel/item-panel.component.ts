@@ -35,7 +35,7 @@ export class ItemPanelComponent implements OnInit{
     this.dialog.open(ItemDialogComponent, {
       data: this.item,
       height: '80vh',
-      width: '40vw',
+      width: '36vw',
     });
   }
 

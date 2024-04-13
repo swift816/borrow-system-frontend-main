@@ -1,7 +1,9 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, HostListener, Renderer2, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Filter } from 'src/app/models/Filter';
+import { Pagination } from 'src/app/models/Pagination';
+import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -46,11 +48,25 @@ import { Router } from '@angular/router';
   ]
 })
 export class LandingPageComponent implements AfterViewInit {
+  pagination: Pagination = {
+    length: 100,
+    page: 1,
+    limit: 25,
+    pageSizeOption: [5, 10, 25, 100],
+  };
+  greetings: string = 'CPE';
+  equipmentlist: any = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+  searchedWord = '';
+  opened: boolean = false;
+
   @ViewChild('section1') section1!: ElementRef;
   @ViewChild('section2') section2!: ElementRef;
   @ViewChild('section3') section3!: ElementRef;
 
-  constructor(private router: Router, private renderer: Renderer2) { }
+  constructor(private router: Router, private renderer: Renderer2, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute) { }
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => this.queryParamsHandler(params));
+  }
 
   ngAfterViewInit(): void {
     this.checkElementsInView();
@@ -101,5 +117,29 @@ export class LandingPageComponent implements AfterViewInit {
 
   directToLogin(): void {
     this.router.navigate(['/login']);
+  }
+
+  searchProduct(event: any) {
+    console.log(event);
+  }
+
+  cartClicked() {
+    this.opened = !this.opened;
+  }
+
+  getEquipmentList() {
+    let filter: Filter = {
+      searchWord: this.searchedWord,
+    };
+    this.equipmentService.getItems(this.pagination, filter).subscribe((resp) => {
+      this.equipmentlist = resp.data;
+    });
+  }
+
+  queryParamsHandler(params: Params) {
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.searchedWord = params['search'] ? params['search'] : '';
+    this.getEquipmentList();
   }
 }

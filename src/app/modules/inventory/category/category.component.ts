@@ -1,14 +1,18 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
 
+interface Name {
+  value: string;
+  viewValue: string;
+  isSelected: boolean;
+}
 interface Equipment {
   value: string;
   viewValue: string;
   isSelected: boolean;
-  subcategories: { value: string, viewValue: string }[];
 }
 
 interface Brand {
@@ -50,8 +54,14 @@ interface Department {
 export interface ChipColor {
   name: string;
   color: ThemePalette;
+  value: string;
 }
-
+interface Item {
+  name: string;
+}
+interface Filters {
+  equipmenttype: string;
+}
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -61,17 +71,37 @@ export class CategoryComponent implements OnInit {
   
   equipments: Equipment[] = [];
   brands: Brand[] = [];
-  matters: Matter[] = [];
-  descriptions: Description[] = [];
-  status: Status[] = [];
-  remarks: Remarks[] = [];
-  departments: Remarks[] = [];
   selectedValue: string[] = [];
   selectedEquipment: Equipment | null = null;
+  
+  selectedSort: string | null = null;
+    matters: Matter[] = [
+      { value: 'Solid', viewValue: 'Solid', isSelected: false },
+      { value: 'Liquid', viewValue: 'Liquid', isSelected: false },
+  ];
+  descriptions: Description[] = [
+      { value: 'Inventory', viewValue: 'Inventory', isSelected: false },
+      { value: 'Non-Inventory', viewValue: 'Non-Inventory', isSelected: false },
+  ];
+  status: Status[] = [
+      { value: 'Active', viewValue: 'Active', isSelected: false },
+      { value: 'Obsolete', viewValue: 'Obsolete', isSelected: false },
+      { value: 'Repair', viewValue: 'Repair', isSelected: false },
+  ];
+  remarks: Remarks[] = [
+      { value: 'Functional', viewValue: 'Functional', isSelected: false },
+      { value: 'Defective', viewValue: 'Defective', isSelected: false },
+  ];
+  departments: Department[] = [
+      { value: 'ECL', viewValue: 'ECL', isSelected: false },
+      { value: 'CMPE', viewValue: 'CMPE', isSelected: false },
+      { value: 'CE', viewValue: 'CE', isSelected: false },
+      { value: 'ECE', viewValue: 'CE', isSelected: false },
+  ];
+  selectedChipOptions: string[] = [];
   @Output() selectedCategories = new EventEmitter<any>();
-
   constructor(
-    
+    private location: Location ,
     private equipmentService: EquipmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -81,49 +111,78 @@ export class CategoryComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.handleQueryParams(params);
     });
-    this.loadItemsAndCategories();
     this.loadEquipmentTypes();
     this.loadBrandList();
   }
-  populateSubcategories(): void {
-    this.equipments.forEach(equipment => {
-      equipment.subcategories = [
-        { value: 'subcategory1', viewValue: 'Subcategory 1' },
-        { value: 'subcategory2', viewValue: 'Subcategory 2' }
-      ];
-    });
-  }
+  
   loadEquipmentTypes(): void {
-    this.equipmentService.getEquipmentTypes().subscribe(
-      (response) => {
-        this.equipments = response.map((type: any) => ({
-          value: type.name,
-          viewValue: type.name,
-          isSelected: false,
-          subcategories: []
-        }));
-        this.emitSelectedCategories();
-      },
-      (error) => {
-        console.error('Error fetching equipment types:', error);
-      }
-    );
+    let currentPage = 1;
+    let totalPages = 1;
+    let allEquipmentTypes: Equipment[] = [];
+  const fetchPage = () => {
+      this.equipmentService.getEquipmentTypesWithPagination(currentPage, 10).subscribe(
+        (response) => {
+          totalPages = Math.ceil(response.total / 10);
+  
+          const equipments = response.data.map((type: any) => ({
+            value: type.name,
+            viewValue: type.name,
+            isSelected: false,
+          }));
+          allEquipmentTypes = [...allEquipmentTypes, ...equipments];
+  
+          if (currentPage < totalPages) {
+            currentPage++;
+            fetchPage();
+          } else {
+          
+            this.equipments = allEquipmentTypes;
+            this.emitSelectedCategories();
+          }
+        },
+        (error) => {
+          console.error('Error fetching equipment types:', error);
+        }
+      );
+  };
+  
+  fetchPage();
   }
-  loadBrandList(): void {
-    this.equipmentService.getBrandList().subscribe(
-      (response) => {
-        this.brands = response.map((brand: any) => ({
-          value: brand.name,
-          viewValue: brand.name,
-          isSelected: false
-        }));
-        this.emitSelectedCategories();
-      },
-      (error) => {
-        console.error('Error fetching brand list:', error);
-      }
-    );
+    loadBrandList(): void {
+      
+      let currentPage = 1;
+      let totalPages = 1;
+      let allBrands: Brand[] = [];
+    
+    const fetchPage = () => {
+        this.equipmentService.getBrandListWithPagination(currentPage, 10).subscribe(
+          (response) => {
+            totalPages = Math.ceil(response.total / 10);
+    
+            const brands = response.data.map((brand: any) => ({
+              value: brand.brand,
+              viewValue: brand.brand,
+              isSelected: false
+            }));
+            allBrands = [...allBrands, ...brands];
+    
+            if (currentPage < totalPages) {
+              currentPage++;
+              fetchPage();
+            } else {
+              this.brands = allBrands;
+              this.emitSelectedCategories();
+            }
+          },
+          (error) => {
+            console.error('Error fetching brand list:', error);
+          }
+        );
+    };
+    
+    fetchPage();
   }
+    
   handleQueryParams(params: Params): void {
     
     this.equipments.forEach((equipment) => {
@@ -154,63 +213,16 @@ export class CategoryComponent implements OnInit {
     this.departments.forEach((department) => {
       department.isSelected = params['department'] === department.value;
     });
-  
+    
     this.emitSelectedCategories();
   }
-  loadItemsAndCategories(): void {
-    const pagination: Pagination = {
-      length: 100,
-      page: 1,
-      limit: 25,
-      pageSizeOption: [5, 10, 25, 100],
-    };
   
-    this.equipmentService.getItems(pagination, {}).subscribe(
-      (response) => {
-        const items = response.data;
-        this.matters = this.getUniqueValues(items, 'matter');
-        this.descriptions = this.getUniqueValues(items, 'description');
-        this.status = this.getUniqueValues(items, 'status');
-        this.remarks = this.getUniqueValues(items, 'remarks');
-        this.departments = this.getUniqueValues(items, 'department');
-        
-        this.populateSubcategories();
-  
-        this.emitSelectedCategories();
-      },
-      (error) => {
-        console.error('Error fetching items:', error);
-      }
-    );
-  }
   
   
 
-  private getUniqueValues(items: any[], key: string): any[] {
-    const uniqueValues: any[] = [];
-    items.forEach((item) => {
-      if (item[key] && !uniqueValues.some((val) => val.value === item[key])) {
-        uniqueValues.push({ value: item[key], viewValue: item[key] });
-      }
-    });
-    return uniqueValues;
-  }
   updateQueryParams(category: string, value: string): void {
     const queryParams: Params = {};
     queryParams[category] = value;
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams,
-      queryParamsHandling: 'merge',
-    });
-  }
-  updateEquipmentSubcategories(selectedEquipmentValue: string): void {
-    this.selectedEquipment = this.equipments.find(equipment => equipment.value === selectedEquipmentValue) || null;
-  }
-  updateQueryParamsWithSubcategory(equipment: Equipment, subcategory: string): void {
-    const queryParams: Params = {};
-    queryParams['equipmentType'] = equipment.value;
-    queryParams['subcategory'] = subcategory;
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams,
@@ -229,13 +241,44 @@ export class CategoryComponent implements OnInit {
     };
     this.selectedCategories.emit(selectedCategories);
   }
-  
+  resetFilters(): void {
+    console.log('Resetting filters...');
+    this.equipments.forEach(equipment => equipment.isSelected = false);
+    this.brands.forEach(brand => brand.isSelected = false);
+    this.matters.forEach(matter => matter.isSelected = false);
+    this.descriptions.forEach(description => description.isSelected = false);
+    this.status.forEach(status => status.isSelected = false);
+    this.remarks.forEach(remarks => remarks.isSelected = false);
+    this.departments.forEach(department => department.isSelected = false);
+      const queryParams: Params = {};
+      queryParams['equipmentType'] = '';
+      queryParams['brand'] = '';
+      queryParams['matter'] = '';
+      queryParams['description'] = '';
+      queryParams['remarks'] = '';
+      queryParams['department'] = '';
+      queryParams['status'] = '';
+      queryParams['sort'] = '';
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams,
+        queryParamsHandling: 'merge',
+      });
+    }
+  // onChipSelect(chip: ChipColor) {
+  //   this.selectedSort = chip.value;
+    
+  //   alert("SOOORT");
+  //   const queryParams: Params = {};
+  //     queryParams['sort'] = this.selectedSort;
+  //     this.router.navigate([], {
+  //       relativeTo: this.activatedRoute,
+  //       queryParams,
+  //       queryParamsHandling: 'merge',
+  //     });
+  // }
   availableColors: ChipColor[] = [
-    { name: 'Name (A-Z)', color: undefined },
-    { name: 'Name (Z-A)', color: undefined },
-    { name: 'Color (A-Z)', color: undefined },
-    { name: 'Color (Z-A)', color: undefined },
-    { name: 'Status', color: undefined },
-    { name: 'Tags', color: undefined },
+    { name: 'Name (A-Z)', color: undefined , value: 'asc'},
+    { name: 'Name (Z-A)', color: undefined , value: 'desc'},
   ];
 }

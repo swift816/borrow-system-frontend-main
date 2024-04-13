@@ -1,22 +1,16 @@
 
 <div class="panel-name">Category</div>
 <div class="form-fields-container">
+    
     <mat-form-field class="form-field">
         <mat-label>Equipment Type</mat-label>
-        <mat-select (selectionChange)="updateQueryParams('equipmentType', $event.value)" (selectionChange)="updateEquipmentSubcategories($event.value)">
+        <mat-select (selectionChange)="updateQueryParams('equipmentType', $event.value)">
             <mat-option *ngFor="let equipment of equipments" [value]="equipment.value">
                 {{ equipment.viewValue }}
-                <div *ngIf="selectedEquipment && selectedEquipment.subcategories && selectedEquipment.subcategories.length > 0">
-                        <mat-select (selectionChange)="updateQueryParams('subcategory', $event.value)">
-                            <mat-option *ngFor="let subcategory of selectedEquipment.subcategories" [value]="subcategory.value">
-                                {{ subcategory.viewValue }}
-                            </mat-option>
-                        </mat-select>
-                </div>
             </mat-option>
-            
         </mat-select>
     </mat-form-field>
+    
 
     <mat-form-field class="form-field">
         <mat-label>Brand</mat-label>
@@ -65,7 +59,7 @@
 
     <mat-form-field class="form-field">
         <mat-label>Remarks</mat-label>
-        <mat-select (selectionChange)="updateQueryParams('remark', $event.value)">
+        <mat-select (selectionChange)="updateQueryParams('remarks', $event.value)">
             <mat-option *ngFor="let remark of remarks" [value]="remark.value">
                 {{ remark.viewValue }}
             </mat-option>
@@ -80,11 +74,14 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-
+    <div class="edit-button">
+        <button mat-raised-button (click)="resetFilters()">Reset Filter</button>
+    </div>
 </div>
-<div class="panel-name">Filter</div>
+<!-- <div class="panel-name">Filter</div>
 <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
-    <mat-chip-option *ngFor="let chip of availableColors" [selected]="false" [color]="chip.color">
+    <mat-chip-option *ngFor="let chip of availableColors" [color]="chip.color" (selectedChange)="onChipSelect(chip)">
         {{ chip.name }}
     </mat-chip-option>
-</mat-chip-listbox>
+</mat-chip-listbox> -->
+

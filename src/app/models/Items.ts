@@ -1,24 +1,25 @@
 export interface Item {
-    serialNo: String;
-    equipmentType: Object;
-    name: String;
-    brand: Object;
-    color: String;
-    modelNo: String;
-    quantity: Number;
-    unit: String;
-    matter: String;
-    description: String;
-    status: String;
+    _id: string;
+    serialNo: string;
+    equipmentType: object;
+    name: string;
+    brand: object;
+    color: string;
+    modelNo: string;
+    quantity: number;
+    unit: string;
+    matter: string;
+    description: string;
+    status: string;
     dateAcquired: Date;
     images: {
-        thumbnailUrl: String,
-        midSizeUrl: String,
-        Url: String,
+        thumbnailUrl: string,
+        midSizeUrl: string,
+        Url: string,
     };
-    remarks: String;
-    tags: Boolean;
-    checkedBy: String;
-    department: Number;
-    disp: Boolean;
+    remarks: string;
+    tags: boolean;
+    checkedBy: string;
+    department: number;
+    disp: boolean;
 }

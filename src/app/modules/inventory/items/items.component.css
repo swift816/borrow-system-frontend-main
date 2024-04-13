@@ -69,6 +69,7 @@
     padding: 0 10px;
     height: 70px;
     margin-bottom: -25px;
+    border-radius: 0px;
 }
 mat-form-field.searchbar {
     font-size: 15px;
@@ -98,7 +99,7 @@ mat-form-field.searchbar {
 }
 .scrollable-panel {
     margin: 10px;
-    height: 400px;
+    height: 500px;
     overflow-y: auto;
     border: 1px solid #575757;
     border-radius: 5px;

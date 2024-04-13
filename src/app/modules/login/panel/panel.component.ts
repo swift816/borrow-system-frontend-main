@@ -13,11 +13,21 @@ export class PanelComponent {
   constructor(private authService: AuthService) {}
 
   login(): void {
-    if (this.authService.login(this.accountId, this.password)) {
-      this.accountId = '';
-      this.password = '';
-    } else {
-      console.log('Invalid credentials');
-    }
-  }
+    this.authService.login(this.accountId, this.password).subscribe(
+      success => {
+        if (success) {
+          this.accountId = '';
+          this.password = '';
+          // Optionally, navigate to another route or show a success message
+        } else {
+          console.log('Invalid credentials');
+          // Optionally, show an error message
+        }
+      },
+      error => {
+        console.error('Login failed', error);
+        // Optionally, show an error message
+      }
+    );
+ }
 }

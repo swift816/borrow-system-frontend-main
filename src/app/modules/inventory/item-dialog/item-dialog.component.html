@@ -7,54 +7,59 @@
         <div class="form-container">
             <mat-form-field class="addName" floatLabel="always">
                 <mat-label>Item Name</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.name" />
             </mat-form-field>
+            <!-- Equipment Type -->
             <mat-form-field class="addEquipment" floatLabel="always">
                 <mat-label>Equipment Type</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.equipmentType" />
             </mat-form-field>
+            <!-- Serial No -->
+            <mat-form-field class="addEquipment" floatLabel="always">
+                <mat-label>Serial No</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.serialNo" />
+            </mat-form-field>
+            <!-- Brand Name -->
             <mat-form-field class="addBrand" floatLabel="always">
                 <mat-label>Brand Name</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.brand" />
             </mat-form-field>
+            <!-- Matter Type -->
             <mat-form-field class="addMatter" floatLabel="always">
                 <mat-label>Matter Type</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.matter"/>
+            </mat-form-field>
+            <!-- Color -->
+            <mat-form-field class="addMatter" floatLabel="always">
+                <mat-label>Color</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.color"/>
             </mat-form-field>
         </div>
         <h1 class="header-form">Item Status</h1>
         <div class="form-container">
             <mat-form-field class="addRemarks" floatLabel="always">
                 <mat-label>Remarks</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.remarks" />
             </mat-form-field>
+            <mat-form-field class="addRemarks" floatLabel="always">
+                <mat-label>Checked By</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.checkedBy" />
+            </mat-form-field>
+            <!-- Department -->
             <mat-form-field class="addDepartment" floatLabel="always">
                 <mat-label>Department</mat-label>
-                <input
-                    matInput
-                    autocomplete="off"
-                />
+                <input matInput autocomplete="off" [(ngModel)]="data.department" />
+            </mat-form-field>
+            <mat-form-field class="addDepartment" floatLabel="always">
+                <mat-label>Quanitity</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.quantity" />
             </mat-form-field>
         </div>
     </div>
     <div class="first-content">
         <div class="image-container">
-            image
+            <img class="fit-image" [src]="data.images.thumbnailUrl" alt="Item Image" />
+    
         </div>
         <div class="edit-image">
             <button mat-raised-button>Edit Image</button>
@@ -63,5 +68,5 @@
 </div>
 
 <div class="edit-button">
-    <button mat-raised-button>Edit Item</button>
+    <button mat-raised-button (click)="saveChanges()">Edit Item</button>
 </div>

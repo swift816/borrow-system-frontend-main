@@ -1,18 +1,24 @@
 
 <div class="panel-name">Item List</div>
 <div class="search-item">
+    
     <mat-form-field class="searchbar" floatLabel="always">
         <mat-label>Search Item</mat-label>
         <input
             matInput
             placeholder="Type Here"
             autocomplete="off"
-            [formControl]="searchedWord"
-            (keyup.enter)="searchItem($event)"
+            [formControl]="searchedWord" 
+            
+            (input)="searchItem()"
         />
         <mat-icon matSuffix class="searchbar">search</mat-icon>
+        
     </mat-form-field>
+        <!-- (input)="searchItems()" -->
     
+<button (click)="getSort('asc')">Name (A-Z)</button>
+<button (click)="getSort('desc')">Name (Z-A)</button>
 </div>
 
 <div class="scrollable-panel">
