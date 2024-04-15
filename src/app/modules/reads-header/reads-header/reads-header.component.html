@@ -20,7 +20,7 @@
             <mat-icon class="custom-icon">notifications</mat-icon>
         </button>
         <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
-            <span>Hello, {{ currentUser?.name.firstName }}{{ currentUser?.name.lastName }}</span>
+            <span>Hello, {{ currentUser?.userId }}</span>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="logout($event)">Logout</button>

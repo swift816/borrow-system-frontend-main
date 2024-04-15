@@ -32,7 +32,11 @@ interface Description {
   viewValue: string;
   isSelected: boolean;
 }
-
+interface DateAcquired {
+  value: string;
+  viewValue: string;
+  isSelected: boolean;
+}
 interface Status {
   value: string;
   viewValue: string;
@@ -51,10 +55,11 @@ interface Department {
   isSelected: boolean;
 }
 
-export interface ChipColor {
+export interface SelectedSort {
+  value: string;
   name: string;
   color: ThemePalette;
-  value: string;
+  isSelected: boolean;
 }
 interface Item {
   name: string;
@@ -71,10 +76,18 @@ export class CategoryComponent implements OnInit {
   
   equipments: Equipment[] = [];
   brands: Brand[] = [];
+  dateAcquired: DateAcquired[] = [];
+  
   selectedValue: string[] = [];
   selectedEquipment: Equipment | null = null;
-  
+  selectedBrands: Equipment | null = null;
+  selectedMatter: Equipment | null = null;
+  selectedDescription: Equipment | null = null;
+  selectedStatus: Equipment | null = null;
+  selectedRemarks: Equipment | null = null;
+  selectedDepartment: Equipment | null = null;
   selectedSort: string | null = null;
+  selectedDateAcquired: Date | null = null;
     matters: Matter[] = [
       { value: 'Solid', viewValue: 'Solid', isSelected: false },
       { value: 'Liquid', viewValue: 'Liquid', isSelected: false },
@@ -94,9 +107,11 @@ export class CategoryComponent implements OnInit {
   ];
   departments: Department[] = [
       { value: 'ECL', viewValue: 'ECL', isSelected: false },
-      { value: 'CMPE', viewValue: 'CMPE', isSelected: false },
-      { value: 'CE', viewValue: 'CE', isSelected: false },
-      { value: 'ECE', viewValue: 'CE', isSelected: false },
+  ];
+  
+  sortSelecteds: SelectedSort[] = [
+    { name: 'Name (A-Z)', color: undefined , value: 'asc', isSelected: false},
+    { name: 'Name (Z-A)', color: undefined , value: 'desc', isSelected: false},
   ];
   selectedChipOptions: string[] = [];
   @Output() selectedCategories = new EventEmitter<any>();
@@ -119,7 +134,7 @@ export class CategoryComponent implements OnInit {
     let currentPage = 1;
     let totalPages = 1;
     let allEquipmentTypes: Equipment[] = [];
-  const fetchPage = () => {
+    const fetchPage = () => {
       this.equipmentService.getEquipmentTypesWithPagination(currentPage, 10).subscribe(
         (response) => {
           totalPages = Math.ceil(response.total / 10);
@@ -144,44 +159,52 @@ export class CategoryComponent implements OnInit {
           console.error('Error fetching equipment types:', error);
         }
       );
-  };
-  
-  fetchPage();
-  }
-    loadBrandList(): void {
-      
-      let currentPage = 1;
-      let totalPages = 1;
-      let allBrands: Brand[] = [];
-    
-    const fetchPage = () => {
-        this.equipmentService.getBrandListWithPagination(currentPage, 10).subscribe(
-          (response) => {
-            totalPages = Math.ceil(response.total / 10);
-    
-            const brands = response.data.map((brand: any) => ({
-              value: brand.brand,
-              viewValue: brand.brand,
-              isSelected: false
-            }));
-            allBrands = [...allBrands, ...brands];
-    
-            if (currentPage < totalPages) {
-              currentPage++;
-              fetchPage();
-            } else {
-              this.brands = allBrands;
-              this.emitSelectedCategories();
-            }
-          },
-          (error) => {
-            console.error('Error fetching brand list:', error);
-          }
-        );
     };
     
     fetchPage();
   }
+
+  loadBrandList(): void {
+    let currentPage = 1;
+    let totalPages = 1;
+    let allBrands: Brand[] = [];
+
+    const fetchPage = () => {
+      this.equipmentService.getBrandListWithPagination(currentPage, 10).subscribe(
+        (response) => {
+          totalPages = Math.ceil(response.total / 10);
+  
+          const brands = response.data.map((brand: any) => ({
+            value: brand.brand,
+            viewValue: brand.brand,
+            isSelected: false
+          }));
+          allBrands = [...allBrands, ...brands];
+  
+          if (currentPage < totalPages) {
+            currentPage++;
+            fetchPage();
+          } else {
+            const uniqueBrands = Array.from(new Set(allBrands.map(brand => brand.value)))
+              .map(value => {
+                const originalBrand = allBrands.find(brand => brand.value === value);
+                return originalBrand;
+              })
+              .filter((brand): brand is Brand => brand !== undefined);
+  
+            this.brands = uniqueBrands;
+            this.emitSelectedCategories();
+          }
+        },
+        (error) => {
+          console.error('Error fetching brand list:', error);
+        }
+      );
+    };
+
+    fetchPage();
+  }
+  
     
   handleQueryParams(params: Params): void {
     
@@ -201,7 +224,9 @@ export class CategoryComponent implements OnInit {
     this.descriptions.forEach((description) => {
       description.isSelected = params['description'] === description.value;
     });
-    
+    this.dateAcquired.forEach((dateAcquired) => {
+      dateAcquired.isSelected = params['dateAcquired'] === dateAcquired.value;
+    });
     this.status.forEach((status) => {
       status.isSelected = params['status'] === status.value;
     });
@@ -213,31 +238,36 @@ export class CategoryComponent implements OnInit {
     this.departments.forEach((department) => {
       department.isSelected = params['department'] === department.value;
     });
+    this.sortSelecteds.forEach((sortSelected) => {
+      sortSelected.isSelected = params['sort'] === sortSelected.value;
+    });
     
     this.emitSelectedCategories();
   }
-  
-  
   
 
   updateQueryParams(category: string, value: string): void {
     const queryParams: Params = {};
     queryParams[category] = value;
+
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams,
       queryParamsHandling: 'merge',
     });
   }
+
   emitSelectedCategories(): void {
     const selectedCategories = {
       equipments: this.equipments.map((e) => e.value),
       brands: this.brands.map((b) => b.value),
       matters: this.matters.map((m) => m.value),
       descriptions: this.descriptions.map((d) => d.value),
+      dateAcquired: this.dateAcquired.map((d) => d.value),
       status: this.status.map((r) => r.value),
       remarks: this.remarks.map((r) => r.value),
-      departments: this.remarks.map((r) => r.value),
+      departments: this.departments.map((d) => d.value),
+      sortSelecteds: this.sortSelecteds.map((s) => s.value)
     };
     this.selectedCategories.emit(selectedCategories);
   }
@@ -250,6 +280,15 @@ export class CategoryComponent implements OnInit {
     this.status.forEach(status => status.isSelected = false);
     this.remarks.forEach(remarks => remarks.isSelected = false);
     this.departments.forEach(department => department.isSelected = false);
+    this.selectedEquipment = null;
+    this.selectedBrands = null;
+    this.selectedMatter = null;
+    this.selectedDescription = null;
+    this.selectedStatus = null;
+    this.selectedRemarks = null;
+    this.selectedDepartment = null;
+    this.selectedDateAcquired = null;
+    this.selectedSort = null;
       const queryParams: Params = {};
       queryParams['equipmentType'] = '';
       queryParams['brand'] = '';
@@ -257,6 +296,7 @@ export class CategoryComponent implements OnInit {
       queryParams['description'] = '';
       queryParams['remarks'] = '';
       queryParams['department'] = '';
+      queryParams['dateAcquired'] = '';
       queryParams['status'] = '';
       queryParams['sort'] = '';
       this.router.navigate([], {
@@ -265,20 +305,4 @@ export class CategoryComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     }
-  // onChipSelect(chip: ChipColor) {
-  //   this.selectedSort = chip.value;
-    
-  //   alert("SOOORT");
-  //   const queryParams: Params = {};
-  //     queryParams['sort'] = this.selectedSort;
-  //     this.router.navigate([], {
-  //       relativeTo: this.activatedRoute,
-  //       queryParams,
-  //       queryParamsHandling: 'merge',
-  //     });
-  // }
-  availableColors: ChipColor[] = [
-    { name: 'Name (A-Z)', color: undefined , value: 'asc'},
-    { name: 'Name (Z-A)', color: undefined , value: 'desc'},
-  ];
 }

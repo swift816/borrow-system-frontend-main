@@ -111,8 +111,9 @@
             </div>
         </form>
     </div>
-
-    <div class="add-button">
+    
+    <mat-spinner *ngIf="isFetching" class="loading-spinner"></mat-spinner>
+    <div class="add-button" *ngIf="!isFetching">
         <button mat-raised-button (click)="onSubmit()">Add Item</button>
     </div>
 </div>

@@ -1,6 +1,8 @@
 <div class="panel-title">
     <h1>Add Item</h1>
 </div>
+
+<!-- conditional read only all forms -->
 <div class="add-item">
     <div class="second-content">
         <h1 class="header-form">Item Description</h1>
@@ -51,6 +53,10 @@
                 <input matInput autocomplete="off" [(ngModel)]="data.department" />
             </mat-form-field>
             <mat-form-field class="addDepartment" floatLabel="always">
+                <mat-label>Date Acqured</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.dateAcquired" />
+            </mat-form-field>
+            <mat-form-field class="addDepartment" floatLabel="always">
                 <mat-label>Quanitity</mat-label>
                 <input matInput autocomplete="off" [(ngModel)]="data.quantity" />
             </mat-form-field>
@@ -58,15 +64,19 @@
     </div>
     <div class="first-content">
         <div class="image-container">
-            <img class="fit-image" [src]="data.images.thumbnailUrl" alt="Item Image" />
-    
+            <img class="fit-image" [src]="data.images.thumbnailUrl" alt="Item Image" *ngIf="data.images.thumbnailUrl; else noImage">
+            <ng-template #noImage>
+                <p>No image link provided.</p>
+            </ng-template>
         </div>
-        <div class="edit-image">
-            <button mat-raised-button>Edit Image</button>
+        <div class="edit-image" *ngIf="isFaculty()">
+            <button mat-raised-button *ngIf="!isEditingImage" (click)="isEditingImage = true">Edit Image</button>
+            <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" *ngIf="isEditingImage" (input)="loadImageFromGoogleDrive($event)" [disabled]="isFaculty()">
         </div>
     </div>
 </div>
 
-<div class="edit-button">
+<!-- unconditional button -->
+<div class="edit-button" *ngIf="isFaculty()">
     <button mat-raised-button (click)="saveChanges()">Edit Item</button>
 </div>

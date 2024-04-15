@@ -36,6 +36,8 @@ interface Equipment{
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
+  
+  isFetching: boolean = false;
   imageUrl: string | null = null;
   googleDriveLink: string = '';
 
@@ -90,6 +92,7 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {}
 
   loadImageFromGoogleDrive(event: Event): void {
+
     const inputElement = event.target as HTMLInputElement;
     const googleDriveLink = inputElement.value;
 
@@ -103,9 +106,10 @@ export class AddComponent implements OnInit {
     } else {
         this.imageUrl = null;
     }
-}
+  }
   onSubmit(): void {
     
+    this.isFetching = true;
     console.log('Form check valid: ', this.addItemForm.value);
     
     if (this.addItemForm.valid) {
@@ -114,6 +118,8 @@ export class AddComponent implements OnInit {
       itemData.images = { Url: this.googleDriveLink };
       this.equipmentService.addEquipment(itemData).subscribe(
         response => {
+          
+          this.isFetching = false;
           console.log('Item created successfully:', response);
           this.dialogRef.close();
         },

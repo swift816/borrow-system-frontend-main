@@ -12,7 +12,12 @@
     <div class="brand">{{ equipment.brand }}</div>
   </div>
   <div class="action-wrapper">
-    <button mat-flat-button>DETAIL</button>
-    <button mat-flat-button color="primary" (click)="addEquipment()">ADD</button>
+    
+    <div class="detail-button">
+      <button mat-flat-button>DETAIL</button>
+    </div>
+    <div class="add-button">
+      <button mat-flat-button (click)="addEquipment()">ADD</button>
+    </div>
   </div>
 </div>

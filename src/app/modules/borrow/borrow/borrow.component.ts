@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Filter } from 'src/app/models/Filter';
 import { Pagination } from 'src/app/models/Pagination';
+import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
-
 @Component({
   selector: 'app-borrow',
   templateUrl: './borrow.component.html',
@@ -20,12 +20,26 @@ export class BorrowComponent implements OnInit {
   equipmentlist: any = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
   searchedWord = '';
   opened: boolean = false;
-  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute) {}
+  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
+      this.router.navigate(['/']);
+    }
     this.activatedRoute.queryParams.subscribe((params) => this.queryParamsHandler(params));
   }
 
+  private isAllowedRole(role: string): boolean {
+    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty', 'Student'];
+    return allowedRoles.includes(role);
+  }
+  
+  
+  isFaculty(): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    return currentUser ? currentUser.role === 'Instructor' : false;
+  }
   searchProduct(event: any) {
     console.log(event);
   }

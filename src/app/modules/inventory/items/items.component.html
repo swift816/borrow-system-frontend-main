@@ -1,4 +1,5 @@
 
+
 <div class="panel-name">Item List</div>
 <div class="search-item">
     
@@ -8,17 +9,15 @@
             matInput
             placeholder="Type Here"
             autocomplete="off"
-            [formControl]="searchedWord" 
-            
-            (input)="searchItem()"
+            [formControl]="searchedWord"
+            (keyup.enter)="searchItem()"
         />
         <mat-icon matSuffix class="searchbar">search</mat-icon>
         
     </mat-form-field>
-        <!-- (input)="searchItems()" -->
     
-<button (click)="getSort('asc')">Name (A-Z)</button>
-<button (click)="getSort('desc')">Name (Z-A)</button>
+<!-- <button (click)="getSort('asc')">Name (A-Z)</button>
+<button (click)="getSort('desc')">Name (Z-A)</button> -->
 </div>
 
 <div class="scrollable-panel">
@@ -31,14 +30,23 @@
         <div class="header-status">Status</div>
         <div class="header-quantity">Quantity</div>
     </div>
-    <div class="table-content">
+    
+    <div *ngIf="isFetching" class="loading-overlay">
+        <mat-spinner class="loading-spinner"></mat-spinner>
+    </div>
+    <div *ngIf="itemlist.length === 0 && !isFetching && !noItems" class="loading-overlay">
+        <a class="no-items">No items found.....</a>
+    </div>
+    <div *ngIf="noItems">
+        <a class="no-items">Failed to fetch items!</a>
+    </div>
+    <div class="table-content" *ngIf="!isFetching">
         <table mat-table [dataSource]="itemlist" class="mat-elevation-z8">
             <ng-container matColumnDef="itemPanel">
                 <td mat-cell *matCellDef="let item">
                     <app-item-panel [item]="item"></app-item-panel>
                 </td>
             </ng-container>
-
             <tr mat-row *matRowDef="let item; let i = index; columns: ['itemPanel']"></tr>
         </table>
     </div>
@@ -52,7 +60,8 @@
         (page)="onPageChange($event)">
     </mat-paginator>
 </div>
-<div class="generate-buttons">
+<!-- conditional buttpn -->
+<div class="generate-buttons"  *ngIf="isFaculty()">
     <div class="add-button">
         <button mat-raised-button (click)="addItem()">Add Item</button>
     </div>

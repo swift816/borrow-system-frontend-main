@@ -4,7 +4,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 
 const routes: Routes = [
   {
-    path: 'faculty',
+    path: '',
     component: InventoryComponent
   }
 ];

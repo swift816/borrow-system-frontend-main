@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-panel',
@@ -12,22 +12,23 @@ export class PanelComponent {
 
   constructor(private authService: AuthService) {}
 
+  ngOnInit(): void {
+    this.authService.logout();
+  }
+
   login(): void {
     this.authService.login(this.accountId, this.password).subscribe(
       success => {
         if (success) {
           this.accountId = '';
           this.password = '';
-          // Optionally, navigate to another route or show a success message
         } else {
-          console.log('Invalid credentials');
-          // Optionally, show an error message
+          alert('Invalid credentials');
         }
       },
       error => {
         console.error('Login failed', error);
-        // Optionally, show an error message
       }
     );
- }
+  }
 }

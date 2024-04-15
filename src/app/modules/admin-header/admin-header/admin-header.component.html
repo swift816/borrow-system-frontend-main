@@ -1,1 +1,30 @@
-<p>admin-header works!</p>
+
+<mat-toolbar class="header">
+    <img src="/assets/USJR1.png" class="logo">
+<div class="header-content">
+    <div class="title-text">University of San Jose - Recoletos</div>
+    <div class="sub-text">Laboratory Borrowing System</div>
+</div>
+<span>
+    <div class="button-header">
+        <a href="" (click)="dashboard($event)">Dashboard</a>
+        <a href="" (click)="inventory($event)">Inventory</a>
+        <a href="">Reports</a>
+        <a href="">System</a>
+    </div>
+</span>
+<div class="spacer"></div>
+<span>
+    <div class="button-header-profile">
+        <button mat-flat-button>
+            <mat-icon class="custom-icon">notifications</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
+            <span>Hello, {{ currentUser?.userId }}</span>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout($event)">Logout</button>
+        </mat-menu>
+    </div>
+</span>
+</mat-toolbar>

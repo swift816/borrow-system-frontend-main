@@ -7,7 +7,9 @@
     width: 100%; /* Make it full-width */
     z-index: 1000; /* Increase z-index to ensure it stays on top */
 }
-
+.title{
+    display: flex;
+}
 .logo {
     max-width: 4%;
 }
@@ -15,6 +17,7 @@
 .header-content {
     margin-right: 150px;
     line-height: 1;
+    padding-top: 15px;
 }
 
 .sub-text {

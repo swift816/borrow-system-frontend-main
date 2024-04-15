@@ -16,11 +16,12 @@ interface User {
 export class AuthService {
     private static adminAccountId = 'admin';
     private static adminPassword = 'admin123';
-
+    private static readsAccountId    = 'reads';
+    private static readsPassword = 'reads123';
+    // add more accounts
     constructor(private router: Router, private equipmentService: EquipmentService) {}
 
     login(accountId: string, password: string): Observable<boolean> {
-        // Admin credentials
         if (accountId === AuthService.adminAccountId && password === AuthService.adminPassword) {
             const adminUser: User = {
                 userId: accountId,
@@ -31,7 +32,17 @@ export class AuthService {
             this.navigateToDashboard(adminUser.role);
             return of(true);
         }
-
+        
+        if (accountId === AuthService.readsAccountId && password === AuthService.readsPassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                role: 'reads'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
         return this.equipmentService.getUsers().pipe(
             switchMap(response => {
                 const users = response.data;
@@ -89,7 +100,7 @@ export class AuthService {
                 this.router.navigate(['/dashboard/reads']);
                 break;
             case 'Instructor':
-                this.router.navigate(['/dashboard/faculty']);
+                this.router.navigate(['/dashboard/instructor']);
                 break;
             case 'oic':
                 this.router.navigate(['/dashboard/oic']);
@@ -101,7 +112,11 @@ export class AuthService {
                 this.router.navigate(['/dashboard']);
         }
     }
-
+    
+    getCurrentUser(): User | null {
+        const user = localStorage.getItem('currentUser');
+        return user ? JSON.parse(user) : null;
+    }
     logout(): void {
         localStorage.removeItem('currentUser');
         this.router.navigate(['/login']);

@@ -1,8 +1,6 @@
 .card-container {
   /* This makes all divs the same width */
   background-color: lightgray;
-  border: 1px solid black;
-  padding: 10px;
   /* margin: 5px; */
   /* width: 100%; */
   gap: 5px;
@@ -24,7 +22,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 10px 0;
-  gap: 5px;
+  gap: 20px;
 }
 
 .text-wrapper .item-name {
@@ -34,17 +32,26 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  padding-left: 10px;
 }
-
+.add-button .mat-mdc-unelevated-button.mat-unthemed {
+  display: flex;
+  max-width: 100px;
+  margin-left: 5%;
+  background-color: rgb(62, 112, 62);
+  color: white;
+}
 .text-wrapper .brand {
   font-size: 14px;
   color: #3d3b3b;
+  padding-left: 10px;
 }
 
 .action-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
 }
 
 .mat-mdc-unelevated-button.mat-mdc-button-base {

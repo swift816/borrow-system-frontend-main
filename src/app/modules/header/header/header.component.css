@@ -3,6 +3,7 @@
     height: 10%;
     color: white;
     background-color: rgb(62, 112, 62);
+    width: 100%;
 }
 .logo{
     max-width: 4%;
@@ -55,7 +56,9 @@ a:hover::after{
     align-items: center;
 }
 
-
+.profileName{
+    width: 10%;
+}
 .spacer {
     flex-grow: 1;
     min-height: 1em;

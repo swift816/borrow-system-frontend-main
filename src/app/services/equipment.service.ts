@@ -14,11 +14,11 @@ export class EquipmentService {
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
     if (searchWord) {
-       return this.searchEquipment(searchWord, filters);
+      return this.searchEquipment(searchWord, filters);
     } else {
-       return this.getItems(pagination, filters);
+      return this.getItems(pagination, filters);
     }
-   }
+  }
   getItems(pagination: Pagination, filters: any): Observable<any> {
     
     console.log('Fetching items with params:', pagination, filters);

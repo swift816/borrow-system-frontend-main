@@ -1,4 +1,5 @@
 <div class="itemlist">
+    <!-- data design add columns -->
     <mat-accordion>
         <mat-expansion-panel #panel mouseEnterLeaveDebounce
         (debounceMouseEnter)="panel.open()"
@@ -39,9 +40,15 @@
                     alt=""
                     />
                 </div>
-            <div class="edit-button">
-                <button mat-raised-button (click)="viewItemDetails()">Edit</button>
-            </div>
+
+                <div class="edit-button" *ngIf="isFaculty(); else facultyUser">
+                    <button mat-raised-button (click)="viewItemDetails()">View</button>
+                </div>
+                <ng-template #facultyUser>
+                    <div class="view-button">
+                        <button mat-raised-button (click)="viewItemDetails()">Edit</button>
+                    </div>
+                </ng-template>
         </mat-expansion-panel>
     </mat-accordion>
 </div>

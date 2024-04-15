@@ -1,4 +1,14 @@
-<app-header></app-header>
+<ng-container *ngIf="isAdmin(); else readsHeader">
+    <app-admin-header></app-admin-header>
+</ng-container>
+<ng-template #readsHeader>
+    <ng-container *ngIf="isReads(); else regularHeader">
+        <app-reads-header></app-reads-header>
+    </ng-container>
+</ng-template>
+<ng-template #regularHeader>
+    <app-header></app-header>
+</ng-template>
 <mat-drawer-container class="example-container">
     <mat-drawer mode="side" opened class="custom-drawer">
         <app-category></app-category>

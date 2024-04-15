@@ -13,7 +13,7 @@ export class DashboardReedsComponent implements OnInit{
     
   }
   directToInventory(): void {
-    this.router.navigate(['/inventory/faculty']);
+    this.router.navigate(['/inventory']);
   }
   directToHistory(): void {
     this.router.navigate(['/history/reads']);

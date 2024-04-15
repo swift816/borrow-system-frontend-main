@@ -68,14 +68,14 @@
     margin-right: 10px;
     padding: 0 10px;
     height: 70px;
-    margin-bottom: -25px;
+    margin-bottom: -33px;
     border-radius: 0px;
 }
-mat-form-field.searchbar {
-    font-size: 15px;
-    margin-left: 10px;
-    width: 200px;
-    height: 70px;
+.loading-spinner{
+    bottom: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
 }
 .generate-buttons{
     display: flex;
@@ -99,13 +99,47 @@ mat-form-field.searchbar {
 }
 .scrollable-panel {
     margin: 10px;
-    height: 500px;
+    height: 450px;
     overflow-y: auto;
     border: 1px solid #575757;
     border-radius: 5px;
+    position: relative;
 }
 
+.loading-overlay {
+    position: sticky;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    
+}
+
+.loading-spinner {
+    position: relative;
+    z-index: 11;
+}
+
+.loading-overlay::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
 .spacer {
     margin-right: 84%;
 }
 
+.no-items{
+    font-weight: 500;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}

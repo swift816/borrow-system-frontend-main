@@ -25,10 +25,10 @@ export class BorrowEquipmentCardComponent implements OnInit {
 
   addEquipment() {
     // this.equipmentService.productSubject.next(this.equipment);
-    this._snackbar.open('PRODUCT SUCCESSFULLY ADDED', '', {
+    this._snackbar.open('Item Added Successful', '', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      // duration: 2000,
+      duration: 1000,
       panelClass: ['custom-snackbar'],
     });
   }

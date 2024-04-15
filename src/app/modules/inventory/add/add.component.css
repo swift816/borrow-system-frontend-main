@@ -1,10 +1,13 @@
 form{
     display: flex;
     width: 100%;
+    
+    position: relative;
 }
 .add-item{
     display: flex;
     padding: 1%;
+    
 }
 .first-content{
     position: relative;
@@ -116,4 +119,30 @@ form{
     margin-left: 5%;
     background-color: rgb(62, 112, 62);
     color: white;
+}
+.loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.loading-spinner {
+    position: relative;
+    z-index: 11;
+}
+
+.loading-overlay::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 10;
 }

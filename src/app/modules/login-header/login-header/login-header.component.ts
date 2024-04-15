@@ -15,4 +15,10 @@ export class LoginHeaderComponent implements OnInit{
   directToLogin(): void {
     this.router.navigate(['/login']);
   }
+  
+  directToLandingPage(event: Event): void {
+    
+    event.preventDefault();
+    this.router.navigate(['/landing-page']);
+  }
 }
