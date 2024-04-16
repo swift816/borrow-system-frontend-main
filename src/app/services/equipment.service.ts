@@ -80,8 +80,23 @@ export class EquipmentService {
   
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params }).pipe(catchError(this.handleError));
   }
-  
-  
+  getEquipmentTypes(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + "/api/equipmenttype").pipe(catchError(this.handleError));;
+  }
+  getBrandList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));;
+  }
+  getMatterList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));;
+  }
+
+  getInventoryTypeList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));;
+  }
+
+  getItemStatusList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));;
+  }
   addEquipmentType(equipmentType: any): Observable<any> {
     return this.http.post<any>(environment.API_URL + '/api/equipmenttype', equipmentType).pipe(
       tap(data => console.log('Equipment added:', data)),

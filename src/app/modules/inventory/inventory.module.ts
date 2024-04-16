@@ -63,7 +63,11 @@ import { ReadsHeaderModule } from '../reads-header/reads-header.module';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+  ],
+  exports:[
+    CategoryComponent,
   ]
+  
 })
 export class InventoryModule {
   

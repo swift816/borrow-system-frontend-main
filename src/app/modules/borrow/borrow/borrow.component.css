@@ -1,10 +1,35 @@
-
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.normal-bar{
+  position: sticky;
+  margin-bottom: 5%;
+}
 .page-container {
   padding: 10px 20px;
   position: relative;
+  flex-direction: column;
 }
+.equipment-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .example-container{
+  flex-grow: 1;
   padding: 10px;
+}
+.filter-bar{
+  position: fixed;
+  top: 11%;
+  left: 5%;
+  z-index: 1000;
+}
+.search-filter-wrapper{
+  
+  margin-left: 3%;
 }
 .product-list-wrapper {
   padding: 0 10px;
@@ -36,18 +61,27 @@
   margin: 2px;
   border-radius: 5px;
 }
-
+.custom-drawer {
+    width: 16%;
+    background-color: #f1efef;
+    margin-right: 50px;
+}
 /* mat-drawer-container {
   min-height: calc(100vh - 20%);
 } */
 
 mat-drawer {
-  width: 30%;
+  width: 20%;
+  
 }
-
+.item-container{
+  
+  height: calc(100vh - 120px); /* Adjust the height as needed */
+  overflow-y: auto;
+}
 .view-cart-container {
   position: fixed;
-  bottom: 60px;
+  top: 100px;
   right: 20px;
   border-radius: 50%;
   height: 60px;
@@ -55,10 +89,27 @@ mat-drawer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ecefa3;
+  background: #81bc8c;
   cursor: pointer;
   z-index: 1;
 }
+
+
+.view-category-container {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  border-radius: 10%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e1e7e1;
+  cursor: pointer;
+  z-index: 2;
+}
+
 
 @media screen and (max-width: 420px) {
   .card {

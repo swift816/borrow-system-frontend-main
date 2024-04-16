@@ -7,6 +7,10 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 interface User {
     userId: string;
     password: string;
+    name:{
+        firstName: string;
+        lastName: string;
+    }
     role: string;
 }
 
@@ -18,6 +22,8 @@ export class AuthService {
     private static adminPassword = 'admin123';
     private static readsAccountId    = 'reads';
     private static readsPassword = 'reads123';
+    private static studentAccountId    = 'student';
+    private static studenPasswrd = 'student123';
     // add more accounts
     constructor(private router: Router, private equipmentService: EquipmentService) {}
 
@@ -26,6 +32,10 @@ export class AuthService {
             const adminUser: User = {
                 userId: accountId,
                 password: password,
+                name: {
+                    firstName: 'Admin',
+                    lastName: 'Admin'
+                },
                 role: 'Admin'
             };
             localStorage.setItem('currentUser', JSON.stringify(adminUser));
@@ -37,12 +47,32 @@ export class AuthService {
             const userAcc: User = {
                 userId: accountId,
                 password: password,
+                name: {
+                    firstName: 'reads',
+                    lastName: 'reads'
+                },
                 role: 'reads'
+            };
+            console.log(userAcc.name.firstName);
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.studentAccountId && password === AuthService.studenPasswrd) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'Student',
+                    lastName: 'Student'
+                },
+                role: 'Student'
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
             this.navigateToDashboard(userAcc.role);
             return of(true);
         }
+        
         return this.equipmentService.getUsers().pipe(
             switchMap(response => {
                 const users = response.data;

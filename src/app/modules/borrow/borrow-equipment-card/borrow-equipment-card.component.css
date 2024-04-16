@@ -26,8 +26,8 @@
 }
 
 .text-wrapper .item-name {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 400;
   max-width: 180px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -42,7 +42,7 @@
   color: white;
 }
 .text-wrapper .brand {
-  font-size: 14px;
+  font-size: 13px;
   color: #3d3b3b;
   padding-left: 10px;
 }

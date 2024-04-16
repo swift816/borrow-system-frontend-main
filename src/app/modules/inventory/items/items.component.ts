@@ -169,8 +169,6 @@ export class ItemsComponent implements OnInit  {
 
   filterItemsBySearchWord(items: any[], searchWord: string, dateSelected: string): any[] {
   console.log("SEARCH WORD", dateSelected);
-    const searchFields = ['name'];
-    const dateFields = ['dateAcquired'];
 
     let filteredItems = items.filter(item => {
       const searchFields = ['name'];

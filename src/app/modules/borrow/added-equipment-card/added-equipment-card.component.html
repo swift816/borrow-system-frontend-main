@@ -1,12 +1,19 @@
 <mat-card class="added-equipment">
-  <img class="fit-image" src="../../../../assets/equipmentt_default_image_thumbnail.png" alt="" />
-  <div class="item-name">Long Noose 1</div>
+  <img class="fit-image" [src]="equipment.images.thumbnailUrl ? equipment.images.thumbnailUrl : '../../../../assets/equipment_default_image_thumbnail.png'" alt="" />
+  <div class="item-name">{{ equipment.name }}</div>
   <div class="item-qty">
-    <mat-icon>remove</mat-icon>
-    <span contenteditable="true">1</span>
-    <mat-icon>add</mat-icon>
+      <button mat-icon-button (click)="updateItemQuantity(equipment.quantity - 1)">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <span>{{ equipment.quantity }}</span>
+      <button mat-icon-button (click)="toggleItemInCart()">
+        <mat-icon>add</mat-icon>
+      </button>
   </div>
   <div class="circle">
-    <mat-icon>close</mat-icon>
+    <button mat-icon-button (click)="removeItem()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
+
 </mat-card>

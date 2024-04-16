@@ -1,53 +1,96 @@
 <ng-container *ngIf="isFaculty(); else regularHeader">
-  <app-header></app-header>
-</ng-container>
-<ng-template #regularHeader>
-  <app-student-header></app-student-header>
+  <div class="header">
+    <app-header></app-header>
+  </div>
+  </ng-container>
+  <ng-template #regularHeader>
+  <div class="header">
+    <app-student-header></app-student-header>
+  </div>
 </ng-template>
+
+<div class="normal-bar">
+</div>
 <div class="page-container">
   <!-- search filters -->
-  <div class="search-filter-wrapper">
-    <mat-form-field floatLabel="always">
-      <mat-label>Search Product</mat-label>
-      <input
-        matInput
-        placeholder="Type Here"
-        autocomplete="off"
-        [(ngModel)]="searchedWord"
-        (keyup.enter)="searchProduct($event)"
-      />
-      <mat-icon matSuffix (click)="searchProduct($event)">search</mat-icon>
-    </mat-form-field>
+
+  <div class="filter-bar">
+    
   </div>
   <!-- equipment lists -->
-  <mat-drawer-container class="example-container">
-    <mat-drawer-content>
-      <div class="no-results" *ngIf="!equipmentlist.length; else elseblock">
-        <span>no results available</span>
-      </div>
-      <ng-template #elseblock>
-        <div class="equipment-list-wrapper">
-          <app-borrow-equipment-card
-            class="card"
-            *ngFor="let equipment of equipmentlist"
-            [equipment]="equipment"
-          ></app-borrow-equipment-card>
-        </div>
-      </ng-template>
-    </mat-drawer-content>
+  <div
+  class="view-category-container clickable"
+  [class.cart-openside]="openedCategory"
+  (click)="categoryClicked()"
+  >
+  <mat-icon>menu</mat-icon>
+  </div>
+  <div class="equipment-container">
 
-    <mat-drawer mode="side" [opened]="opened" position="end">
-      <div class="added-equipment-wrapper">
-        <app-added-equipment-card></app-added-equipment-card>
+    <mat-drawer-container class="example-container" >
+      <mat-drawer-content class="item-container">
+        <div *ngIf="isFetching" class="loading-overlay">
+          <mat-spinner class="loading-spinner"></mat-spinner>
       </div>
-    </mat-drawer>
-  </mat-drawer-container>
+        <div class="no-results" *ngIf="!itemlist.length; else elseblock">
+          <span>no results available</span>
+        </div>
+        <ng-template #elseblock>
+          <div class="equipment-list-wrapper">
+            <app-borrow-equipment-card
+              class="card"
+              *ngFor="let equipment of itemlist"
+              [equipment]="equipment"
+              
+              (addToCart)="addItemToAddedEquipment($event)" 
+            ></app-borrow-equipment-card>
+          </div>
+        </ng-template>
+      </mat-drawer-content>
+
+
+      <mat-drawer mode="side" [opened]="openedCategory" position="start">
+        
+        <h1>Search Items</h1>
+        <div class="search-filter-wrapper">
+          <mat-form-field floatLabel="always">
+            <mat-label>Search Item</mat-label>
+            <input
+              matInput
+              placeholder="Type Here"
+              autocomplete="off"
+              [formControl]="searchedWord"
+              (keyup.enter)="searchItem()"
+            />
+            <mat-icon matSuffix (click)="searchProduct($event)">search</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <app-category></app-category>
+      </mat-drawer>
+      <mat-drawer mode="side" [opened]="openedCart" position="end">
+        <div class="added-equipment-wrapper">
+          <h1>Added Items</h1>
+          <app-added-equipment-card
+            *ngFor="let equipment of addedEquipment"
+            [equipment]="equipment"
+            (toggleInCart)="toggleItemInCart($event)"
+            (removeFromCart)="removeItemFromAddedEquipment($event)"
+          ></app-added-equipment-card>
+          <div class="add-button">
+            <button mat-raised-button >Borrow Items</button>
+          </div>
+        </div>
+      </mat-drawer>
+
+    </mat-drawer-container>
+  </div>
+
   <!-- floating shopping cart icon -->
   <div
     class="view-cart-container clickable"
-    [class.cart-openside]="opened"
+    [class.cart-openside]="openedCart"
     (click)="cartClicked()"
   >
-    <mat-icon>shopping_cart</mat-icon>
+    <mat-icon>inbox</mat-icon>
   </div>
-</div>

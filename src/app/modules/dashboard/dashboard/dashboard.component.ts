@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit{
   directToInventory(): void {
     this.router.navigate(['/borrow']);
   }
+  
   directToHistory(): void {
     this.router.navigate(['']);
   }

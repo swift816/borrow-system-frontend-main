@@ -1,4 +1,7 @@
 .added-equipment {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -39,5 +42,6 @@
 }
 
 .fit-image {
-    width: 40px;
+  width: 40px;
+  margin-right: 20px;
 }

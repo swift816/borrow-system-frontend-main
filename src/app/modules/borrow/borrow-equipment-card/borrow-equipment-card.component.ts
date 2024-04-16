@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
@@ -13,7 +13,7 @@ export class BorrowEquipmentCardComponent implements OnInit {
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
   @Input() equipment: Item | any;
-
+  @Output() addToCart = new EventEmitter<Item>();
   constructor(private _snackbar: MatSnackBar, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
@@ -25,6 +25,8 @@ export class BorrowEquipmentCardComponent implements OnInit {
 
   addEquipment() {
     // this.equipmentService.productSubject.next(this.equipment);
+    
+    this.addToCart.emit(this.equipment);
     this._snackbar.open('Item Added Successful', '', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
